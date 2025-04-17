@@ -45,6 +45,13 @@ function query(filterBy = {}) {
             }
         }
 
+        if (filterBy.txt) {
+            const regex = new RegExp(filterBy.txt, 'i')
+            mails = mails.filter(mail =>
+                regex.test(mail.subject) || regex.test(mail.body)
+            )
+        }
+
         return mails
     })
 }
@@ -96,13 +103,13 @@ function _createDemoMails() {
             {
                 id: 'e102',
                 createdAt: 1551133930500,
-                subject: 'Miss you!',
-                body: 'Would love to catch up sometimes',
+                subject: 'Love you!',
+                body: 'Would love to meet up sometimes',
                 isRead: false,
                 sentAt: 1551133930594,
                 removedAt: null,
-                from: 'momo@momo.com',
-                to: 'user@appsus.com'
+                from: 'user@appsus.com',
+                to: 'momo@momo.com'
             }
         ]
         utilService.saveToStorage(MAIL_KEY, mails)

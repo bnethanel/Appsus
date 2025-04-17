@@ -1,16 +1,29 @@
 const { useEffect, useState } = React
 import { mailService } from '../services/mail.service.js'
+import { MailFilter } from '../cmps/MailFilter.jsx'
+import { MailFolderList } from '../cmps/MailFolderList.jsx'
 
 export function MailIndex() {
     const [mails, setMails] = useState([])
+    const [filterBy, setFilterBy] = useState({ status: 'inbox', txt: '' })
 
     useEffect(() => {
-        mailService.query({ status: 'inbox' }).then(setMails)
-    }, [])
+        mailService.query(filterBy).then(setMails)
+    }, [filterBy])
+
+    function onSetFolder(status) {
+        setFilterBy(prev => ({ ...prev, status }))
+    }
+
+    function onSetTxtFilter(txt) {
+        setFilterBy(prev => ({ ...prev, txt }))
+    }
 
     return (
         <section className="mail-index">
-            <h2>Inbox</h2>
+            <MailFilter onSetFilter={onSetTxtFilter} />
+            <MailFolderList onSetFilter={onSetFolder} />
+            <h2>{filterBy.status}</h2>
             <ul>
                 {mails.map(mail => (
                     <li key={mail.id}>
