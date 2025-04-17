@@ -36,11 +36,13 @@
     text-align: right;
 }
 
-.unread .mail-subject,.mail-from {
+.unread .mail-subject,
+.mail-from {
     font-weight: bold;
 }
 
-.read .mail-subject,.mail-from {
+.read .mail-subject,
+.mail-from {
     font-weight: normal;
 }
 
