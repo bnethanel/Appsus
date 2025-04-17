@@ -20,7 +20,7 @@ export function MailDetails() {
         mailService.get(params.mailId)
             .then(mail => setMail(mail))
             .catch(err => console.log('err:', err))
-            // .finally(() => setIsLoading(false))
+        // .finally(() => setIsLoading(false))
     }
 
     function onBack() {
@@ -32,16 +32,16 @@ export function MailDetails() {
         mailService.remove(mail.id).then(() => navigate('/mail'))
     }
 
-
-  return (
-    <section>
-        <button onClick={onBack}>back</button>
-        <button onClick={onDeleteMail}>delete</button>
-        <h1>{mail.subject}</h1>
-        <p>{mail.from}</p>
-        <p>{mail.body}</p>
-    </section>
-  )
+    if (!mail) return <div>Loading mail...</div>
+    return (
+        <section>
+            <button onClick={onBack}>back</button>
+            <button onClick={onDeleteMail}>delete</button>
+            <h1>{mail.subject}</h1>
+            <p>{mail.from}</p>
+            <p>{mail.body}</p>
+        </section>
+    )
 }
 
 
