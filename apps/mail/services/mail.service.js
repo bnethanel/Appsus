@@ -5,13 +5,14 @@ import { storageService } from "../../../services/async-storage.service.js"
 
 
 const MAIL_KEY = 'mailDB'
-_createDemoMails()
+
 
 export const mailService = {
     query,
     getLoggedinUser,
     get,
     remove,
+    markAsRead,
     // addMail, removeMail, 
 }
 
@@ -66,6 +67,17 @@ function query(filterBy = {}) {
     })
 }
 
+function markAsRead(mailId) {
+    return get(mailId).then(mail => {
+        mail.isRead = true
+        return save(mail)  
+    })
+}
+
+function save(mail) {
+    return storageService.put(MAIL_KEY, mail)
+}
+
 
 
 
@@ -94,116 +106,71 @@ const loggedinUser = {
     fullname: 'Mahatma Appsus'
 }
 
-function _createDemoMails() {
+const demoSubjects = [
+    'Meeting Tomorrow', 'Update Required', 'Family Dinner', 'Your Receipt',
+    'Let’s Catch Up!', 'Congrats 🎉', 'Important Info', 'Schedule Change',
+    'Job Offer', 'Invoice #554', 'Join us!', 'Happy Birthday!', 'New Device Login',
+    'Security Alert', 'Your Order', 'Account Update', 'Password Changed',
+    'New Comment', 'See You Soon', 'Flight Confirmed', 'Project Feedback',
+    'Urgent: Reply Needed', 'Missed You', 'Welcome!', 'You’re Invited!'
+  ]
+  
+  const demoBodies = [
+    'Just wanted to check in.', 'Here is the info you asked for.',
+    'Let me know what you think.', 'Thanks again!', 'Attached is the file.',
+    'Please confirm receipt.', 'Are you coming tonight?',
+    'This is a friendly reminder.', 'Following up on our chat.',
+    'We appreciate your patience.'
+  ]
+  
+  function _createDemoMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
-        mails = [
-            {
-                id: 'e201',
-                from: 'no-reply@github.com',
-                to: 'user@appsus.com',
-                subject: 'New push to your repository',
-                body: 'You pushed changes to react-sprint3-starter.',
-                isRead: false,
-                removedAt: null,
-                sentAt: Date.now() - 1000000
-            },
-            {
-                id: 'e202',
-                from: 'user@appsus.com',
-                to: 'friend@gmail.com',
-                subject: 'Lunch this weekend?',
-                body: 'Hey! Want to grab lunch at the usual place this weekend?',
-                isRead: true,
-                removedAt: null,
-                sentAt: Date.now() - 2000000
-            },
-            {
-                id: 'e203',
-                from: 'newsletter@dev.to',
-                to: 'user@appsus.com',
-                subject: 'Top React articles this week',
-                body: 'Check out the most popular articles about React!',
-                isRead: false,
-                removedAt: null,
-                sentAt: Date.now() - 3000000
-            },
-            {
-                id: 'e204',
-                from: 'hr@bigcompany.com',
-                to: 'user@appsus.com',
-                subject: 'Job Interview Feedback',
-                body: 'We’re pleased to inform you that you made it to the next stage!',
-                isRead: true,
-                removedAt: null,
-                sentAt: Date.now() - 4000000
-            },
-            {
-                id: 'e205',
-                from: 'user@appsus.com',
-                to: 'momo@momo.com',
-                subject: 'Thanks for your help',
-                body: 'Just wanted to say thanks again for all your help with the project.',
-                isRead: false,
-                removedAt: null,
-                sentAt: Date.now() - 5000000
-            },
-            {
-                id: 'e206',
-                from: 'cooldev@someemail.com',
-                to: 'user@appsus.com',
-                subject: 'This new JS library is 🔥',
-                body: 'You have to check this out — blew my mind!',
-                isRead: true,
-                removedAt: null,
-                sentAt: Date.now() - 6000000
-            },
-            {
-                id: 'e207',
-                from: 'user@appsus.com',
-                to: 'team@school.edu',
-                subject: 'Sprint 3 Submission',
-                body: 'Please find my final project attached. Looking forward to feedback!',
-                isRead: false,
-                removedAt: null,
-                sentAt: Date.now() - 7000000
-            },
-            {
-                id: 'e208',
-                from: 'billing@netflix.com',
-                to: 'user@appsus.com',
-                subject: 'Your monthly invoice',
-                body: 'Your payment was successfully processed.',
-                isRead: true,
-                removedAt: null,
-                sentAt: Date.now() - 8000000
-            },
-            {
-                id: 'e209',
-                from: 'meme.bot@funnyemails.com',
-                to: 'user@appsus.com',
-                subject: 'Friday Meme Drop',
-                body: 'Enjoy your weekly dose of code memes 🤓',
-                isRead: false,
-                removedAt: null,
-                sentAt: Date.now() - 9000000
-            },
-            {
-                id: 'e210',
-                from: 'user@appsus.com',
-                to: 'mentor@devlife.com',
-                subject: 'Update on my project',
-                body: 'Just wanted to share that the mail app is really coming together!',
-                isRead: true,
-                removedAt: null,
-                sentAt: Date.now() - 10000000
-            }
-            
-
-
-        ]
-        utilService.saveToStorage(MAIL_KEY, mails)
+      mails = []
+  
+      const contacts = [
+        'elon@tesla.com', 'sara@work.com', 'no-reply@github.com',
+        'mom@family.com', 'danny@school.edu', 'newsletter@react.dev',
+        'bill@microsoft.com', 'friend@gmail.com', 'noreply@bank.com',
+        'service@amazon.com', 'kate@travel.org', 'support@zoom.us',
+        'tomer@appsus.com', 'marketing@startup.io', 'lee@funmail.com',
+        'nina@events.co', 'support@airbnb.com', 'momo@momo.com',
+        'sharon@design.co', 'offers@deals.com'
+      ]
+  
+      for (let i = 0; i < 25; i++) {
+        const isRead = Math.random() > 0.5
+        const id = 'e' + (101 + i)
+        const subject = demoSubjects[i % demoSubjects.length]
+        const body = demoBodies[Math.floor(Math.random() * demoBodies.length)]
+        const contactEmail = contacts[Math.floor(Math.random() * contacts.length)]
+        const sentAt = Date.now() - Math.floor(Math.random() * 100000000)
+        const createdAt = sentAt - 10000
+  
+        // 👇 Randomly decide if this mail is "inbox" or "sent"
+        const isSentByUser = Math.random() > 0.5
+  
+        const from = isSentByUser ? loggedinUser.email : contactEmail
+        const to = isSentByUser ? contactEmail : loggedinUser.email
+  
+        mails.push({
+          id,
+          createdAt,
+          subject,
+          body,
+          isRead,
+          sentAt,
+          removedAt: null,
+          from,
+          to
+        })
+      }
+  
+      utilService.saveToStorage(MAIL_KEY, mails)
     }
-}
+  }
+  
+  
+  _createDemoMails()
 
 

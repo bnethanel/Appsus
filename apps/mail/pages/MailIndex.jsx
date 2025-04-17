@@ -12,12 +12,8 @@ export function MailIndex() {
         mailService.query(filterBy).then(setMails)
     }, [filterBy])
 
-    function onSetFolder(status) {
-        setFilterBy(prev => ({ ...prev, status }))
-    }
-
-    function onSetTxtFilter(txt) {
-        setFilterBy(prev => ({ ...prev, txt }))
+    function onSetFilter(updatedFilter) {
+        setFilterBy(prev => ({ ...prev, ...updatedFilter }))
     }
 
     function onRemoveMail(mailId) {
@@ -36,10 +32,10 @@ export function MailIndex() {
 
     return (
         <section className="mail-index">
-            <MailFilter onSetFilter={onSetTxtFilter} />
-            <MailFolderList onSetFilter={onSetFolder} />
+            <MailFilter onSetFilter={onSetFilter} />
+            <MailFolderList onSetFilter={status => onSetFilter({ status })} />
             <h2>{filterBy.status}</h2>
-            <MailList mails={mails} onRemoveMail={onRemoveMail}/>
+            <MailList mails={mails} onRemoveMail={onRemoveMail} isReadFilter={filterBy.isRead}/>
         </section>
     )
 }

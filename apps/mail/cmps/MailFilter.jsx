@@ -1,17 +1,33 @@
 const { useState } = React
 
 export function MailFilter({ onSetFilter }) {
-    const [filterBy, setFilterBy] = useState({ txt: '', isRead: null })
+    
+    const [filterBy, setFilterBy] = useState({ status: 'inbox', txt: '', isRead: null })
+
     function handleChange(ev) {
-        const { value } = ev.target
-        onSetFilter(value)
+        const { name, value } = ev.target
+        let val = value
+
+        
+        if (name === 'isRead') {
+            val = value === 'all' ? null : value === 'true'
+        }
+
+        
+        const updatedFilter = { ...filterBy, [name]: val }
+        setFilterBy(updatedFilter)
+
+        
+        onSetFilter(updatedFilter)
     }
 
     return (
         <section className="mail-filter">
             <input
                 type="text"
+                name="txt"
                 placeholder="Search mail"
+                value={filterBy.txt}
                 onChange={handleChange}
             />
 
