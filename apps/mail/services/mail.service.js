@@ -110,7 +110,21 @@ function _createDemoMails() {
                 removedAt: null,
                 from: 'user@appsus.com',
                 to: 'momo@momo.com'
-            }
+            },
+
+            {
+                id: 'e103',
+                createdAt: 1551133930500,
+                subject: 'About work...',
+                body: 'You are fired',
+                isRead: true,
+                sentAt: 1551133930554,
+                removedAt: null,
+                from: 'FredCharles@work.com',
+                to: 'user@appsus.com'
+            },
+
+
         ]
         utilService.saveToStorage(MAIL_KEY, mails)
     }
