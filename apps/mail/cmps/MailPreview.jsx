@@ -1,6 +1,6 @@
 const { useNavigate } = ReactRouterDOM
 
-export function MailPreview({ mail }) {
+export function MailPreview({ mail, }) {
     const navigate = useNavigate()
 
     function onOpenMail() {

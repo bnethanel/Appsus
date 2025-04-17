@@ -10,11 +10,21 @@ _createDemoMails()
 export const mailService = {
     query,
     getLoggedinUser,
+    get,
+    remove,
     // addMail, removeMail, 
 }
 
 function getLoggedinUser() {
     return loggedinUser
+}
+
+function get(mailId) {
+    return storageService.get(MAIL_KEY, mailId)
+}
+
+function remove(mailId) {
+    return storageService.remove(MAIL_KEY, mailId)
 }
 
 function query(filterBy = {}) {

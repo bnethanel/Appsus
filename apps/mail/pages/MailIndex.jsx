@@ -20,12 +20,26 @@ export function MailIndex() {
         setFilterBy(prev => ({ ...prev, txt }))
     }
 
+    function onRemoveMail(mailId) {
+        // setIsLoading(true)
+        mailService.remove(mailId)
+            .then(() => {
+                setMails((prevMails) => prevMails.filter(mail => mail.id !== mailId))
+                // showSuccessMsg(`Car (${carId}) removed successfully!`)
+            })
+            .catch(err => {
+                console.log('Problem removing mail:', err)
+                // showErrorMsg('Problem removing car!')
+            })
+            // .finally(() => setIsLoading(false))
+    }
+
     return (
         <section className="mail-index">
             <MailFilter onSetFilter={onSetTxtFilter} />
             <MailFolderList onSetFilter={onSetFolder} />
             <h2>{filterBy.status}</h2>
-            <MailList mails={mails}/>
+            <MailList mails={mails} onRemoveMail={onRemoveMail}/>
         </section>
     )
 }
