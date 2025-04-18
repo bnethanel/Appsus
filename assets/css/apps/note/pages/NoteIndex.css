@@ -1,1 +1,25 @@
  /* note index */
+
+ .note-index {
+    padding: 1rem;
+  }
+  
+  .note-preview {
+    border-radius: 8px;
+    padding: 1rem;
+    min-height: 120px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    position: relative;
+  }
+  
+  .note-preview .actions {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+  }
+  
+  .note-txt {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  
