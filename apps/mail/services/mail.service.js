@@ -13,7 +13,9 @@ export const mailService = {
     get,
     remove,
     markAsRead,
-    // addMail, removeMail, 
+    getEmptyMail, 
+    save,
+    add,
 }
 
 function getLoggedinUser() {
@@ -77,6 +79,24 @@ function markAsRead(mailId) {
 function save(mail) {
     return storageService.put(MAIL_KEY, mail)
 }
+
+function add(mail) {
+    return storageService.post(MAIL_KEY, mail)
+  }
+
+function getEmptyMail(to = '', subject = '', body = '') {
+    return {
+      id: '',
+      createdAt: Date.now(),
+      subject,
+      body,
+      isRead: false,
+      sentAt: Date.now(),
+      removedAt: null,
+      from: loggedinUser.email,
+      to
+    }
+  }
 
 
 
