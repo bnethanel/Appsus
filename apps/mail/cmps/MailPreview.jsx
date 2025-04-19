@@ -1,13 +1,23 @@
 const { useNavigate } = ReactRouterDOM
 import { mailService } from "../services/mail.service.js"
 
-export function MailPreview({ mail, isReadFilter }) {
+export function MailPreview({ mail, isReadFilter, onToggleStar }) {
     const navigate = useNavigate()
 
     function onOpenMail() {
-        mailService.markAsRead(mail.id)
-            .then(() => navigate(`/mail/${mail.id}`))
+        if (mail.isDraft) {
+            navigate('/mail/compose', { state: { draft: mail } })
+        } else {
+            mailService.markAsRead(mail.id)
+                .then(() => navigate(`/mail/${mail.id}`))
+                .catch(err => console.error('Failed to mark as read:', err))
+        }
     }
+
+    function handleToggleStar(ev) {
+        ev.stopPropagation() 
+        onToggleStar(mail.id)
+      }
 
     return (
         <li
@@ -17,6 +27,8 @@ export function MailPreview({ mail, isReadFilter }) {
             }
             onClick={onOpenMail}
         >
+            
+            <button className="mail-preview-star" onClick={handleToggleStar}><i className={mail.isStarred ? "fa-solid fa-star active-star" : "fa-regular fa-star"}></i></button>
             <span className="mail-from">{mail.from}</span>
             <span className="mail-subject">{mail.subject}</span>
             <span className="mail-snippet">{mail.body}</span>

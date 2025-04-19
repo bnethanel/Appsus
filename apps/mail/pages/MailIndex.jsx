@@ -1,5 +1,5 @@
 const { useEffect, useState } = React
-const { Outlet } = ReactRouterDOM
+const { Outlet, useLocation } = ReactRouterDOM
 import { mailService } from '../services/mail.service.js'
 import { MailFilter } from '../cmps/MailFilter.jsx'
 import { MailFolderList } from '../cmps/MailFolderList.jsx'
@@ -8,10 +8,11 @@ import { MailList } from '../cmps/MailList.jsx'
 export function MailIndex() {
     const [mails, setMails] = useState([])
     const [filterBy, setFilterBy] = useState({ status: 'inbox', txt: '' })
+    const location = useLocation()
 
     useEffect(() => {
         mailService.query(filterBy).then(setMails)
-    }, [filterBy])
+    }, [filterBy, location])
 
     function onSetFilter(updatedFilter) {
         setFilterBy(prev => ({ ...prev, ...updatedFilter }))
@@ -28,19 +29,35 @@ export function MailIndex() {
                 console.log('Problem removing mail:', err)
                 // showErrorMsg('Problem removing car!')
             })
-            // .finally(() => setIsLoading(false))
+        // .finally(() => setIsLoading(false))
     }
-    
+
+    function onToggleStar(mailId) {
+        mailService.get(mailId).then(mail => {
+          mail.isStarred = !mail.isStarred
+          mailService.save(mail).then(() => {
+            // Refresh the state so the UI updates
+            setMails(prevMails =>
+              prevMails.map(m => m.id === mailId ? { ...m, isStarred: mail.isStarred } : m)
+            )
+          })
+        })
+      }
+
 
     return (
         <section className="flex">
             <MailFolderList onSetFilter={status => onSetFilter({ status })} selectedFolder={filterBy.status} />
-    
+
             <section className="flex column mail-main">
                 <MailFilter onSetFilter={onSetFilter} />
-                <MailList mails={mails} onRemoveMail={onRemoveMail} isReadFilter={filterBy.isRead} />
+
+                <div className="mail-content-wrapper">
+                    <MailList mails={mails} onRemoveMail={onRemoveMail} onToggleStar={onToggleStar} isReadFilter={filterBy.isRead} />
+                    <Outlet />
+                </div>
+
             </section>
-            <Outlet />
         </section>
     )
 }

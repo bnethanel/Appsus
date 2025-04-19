@@ -1,15 +1,31 @@
-const { useState } = React
-const { useNavigate, Link } = ReactRouterDOM
+const { useState, useEffect } = React
+const { useNavigate, useLocation } = ReactRouterDOM
 import { mailService } from '../services/mail.service.js'
 
 export function MailCompose() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const draft = location.state && location.state.draft
+
   const [formData, setFormData] = useState({
     to: '',
     subject: '',
     body: ''
   })
 
-  const navigate = useNavigate()
+  useEffect(() => {
+    if (draft) {
+      setFormData({
+        to: draft.to || '',
+        subject: draft.subject || '',
+        body: draft.body || ''
+      })
+    }
+  }, [draft])
+
+  
+  
+  
 
   function handleChange(ev) {
     const { name, value } = ev.target
@@ -22,8 +38,21 @@ export function MailCompose() {
     const newMail = mailService.getEmptyMail(formData.to, formData.subject, formData.body)
 
     mailService.add(newMail).then(() => {
-      navigate('/mail')  // back to inbox
+      navigate('/mail')  
     })
+  }
+
+  function onCloseCompose() {
+    const hasContent = formData.to || formData.subject || formData.body
+    if (hasContent) {
+      const draft = mailService.getEmptyMail(formData.to, formData.subject, formData.body)
+      draft.isDraft = true
+      draft.sentAt = null
+
+      mailService.add(draft)
+    }
+
+    navigate('/mail')
   }
 
   return (
@@ -31,9 +60,7 @@ export function MailCompose() {
       <div className="mail-compose-header flex space-between align-center">
         <span className="compose-header-message  ">New Message</span>
         
-        <Link to="/mail">
-          <button className="mail-compose-close">x</button>
-        </Link>
+          <button className="mail-compose-close" onClick={onCloseCompose}>x</button>
 
       </div>
 

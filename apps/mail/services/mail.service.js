@@ -13,7 +13,7 @@ export const mailService = {
     get,
     remove,
     markAsRead,
-    getEmptyMail, 
+    getEmptyMail,
     save,
     add,
 }
@@ -27,7 +27,16 @@ function get(mailId) {
 }
 
 function remove(mailId) {
-    return storageService.remove(MAIL_KEY, mailId)
+    return get(mailId)
+        .then(mail => {
+            if (!mail.removedAt) {
+                mail.removedAt = Date.now()
+                return save(mail)
+            } else {
+                return storageService.remove(MAIL_KEY, mailId)
+            }
+
+        })
 }
 
 function query(filterBy = {}) {
@@ -76,7 +85,7 @@ function query(filterBy = {}) {
 function markAsRead(mailId) {
     return get(mailId).then(mail => {
         mail.isRead = true
-        return save(mail)  
+        return save(mail)
     })
 }
 
@@ -86,22 +95,23 @@ function save(mail) {
 
 function add(mail) {
     return storageService.post(MAIL_KEY, mail)
-  }
+}
 
 function getEmptyMail(to = '', subject = '', body = '') {
     return {
-      id: '',
-      createdAt: Date.now(),
-      subject,
-      body,
-      isRead: false,
-      sentAt: Date.now(),
-      isStarred: false,
-      removedAt: null,
-      from: loggedinUser.email,
-      to
+        id: '',
+        createdAt: Date.now(),
+        subject,
+        body,
+        isRead: false,
+        sentAt: Date.now(),
+        isStarred: false,
+        removedAt: null,
+        from: loggedinUser.email,
+        isDraft: true,
+        to
     }
-  }
+}
 
 
 
@@ -138,64 +148,64 @@ const demoSubjects = [
     'Security Alert', 'Your Order', 'Account Update', 'Password Changed',
     'New Comment', 'See You Soon', 'Flight Confirmed', 'Project Feedback',
     'Urgent: Reply Needed', 'Missed You', 'Welcome!', 'You’re Invited!'
-  ]
-  
-  const demoBodies = [
+]
+
+const demoBodies = [
     'Just wanted to check in.', 'Here is the info you asked for.',
     'Let me know what you think.', 'Thanks again!', 'Attached is the file.',
     'Please confirm receipt.', 'Are you coming tonight?',
     'This is a friendly reminder.', 'Following up on our chat.',
     'We appreciate your patience.'
-  ]
-  
-  function _createDemoMails() {
+]
+
+function _createDemoMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
     if (!mails || !mails.length) {
-      mails = []
-  
-      const contacts = [
-        'elon@tesla.com', 'sara@work.com', 'no-reply@github.com',
-        'mom@family.com', 'danny@school.edu', 'newsletter@react.dev',
-        'bill@microsoft.com', 'friend@gmail.com', 'noreply@bank.com',
-        'service@amazon.com', 'kate@travel.org', 'support@zoom.us',
-        'tomer@appsus.com', 'marketing@startup.io', 'lee@funmail.com',
-        'nina@events.co', 'support@airbnb.com', 'momo@momo.com',
-        'sharon@design.co', 'offers@deals.com'
-      ]
-  
-      for (let i = 0; i < 25; i++) {
-        const isRead = Math.random() > 0.5
-        const id = 'e' + (101 + i)
-        const subject = demoSubjects[i % demoSubjects.length]
-        const body = demoBodies[Math.floor(Math.random() * demoBodies.length)]
-        const contactEmail = contacts[Math.floor(Math.random() * contacts.length)]
-        const sentAt = Date.now() - Math.floor(Math.random() * 100000000)
-        const createdAt = sentAt - 10000
-  
-        // 👇 Randomly decide if this mail is "inbox" or "sent"
-        const isSentByUser = Math.random() > 0.5
-  
-        const from = isSentByUser ? loggedinUser.email : contactEmail
-        const to = isSentByUser ? contactEmail : loggedinUser.email
-  
-        mails.push({
-          id,
-          createdAt,
-          subject,
-          body,
-          isRead,
-          sentAt,
-          removedAt: null,
-          from,
-          to
-        })
-      }
-  
-      utilService.saveToStorage(MAIL_KEY, mails)
+        mails = []
+
+        const contacts = [
+            'elon@tesla.com', 'sara@work.com', 'no-reply@github.com',
+            'mom@family.com', 'danny@school.edu', 'newsletter@react.dev',
+            'bill@microsoft.com', 'friend@gmail.com', 'noreply@bank.com',
+            'service@amazon.com', 'kate@travel.org', 'support@zoom.us',
+            'tomer@appsus.com', 'marketing@startup.io', 'lee@funmail.com',
+            'nina@events.co', 'support@airbnb.com', 'momo@momo.com',
+            'sharon@design.co', 'offers@deals.com'
+        ]
+
+        for (let i = 0; i < 25; i++) {
+            const isRead = Math.random() > 0.5
+            const id = 'e' + (101 + i)
+            const subject = demoSubjects[i % demoSubjects.length]
+            const body = demoBodies[Math.floor(Math.random() * demoBodies.length)]
+            const contactEmail = contacts[Math.floor(Math.random() * contacts.length)]
+            const sentAt = Date.now() - Math.floor(Math.random() * 100000000)
+            const createdAt = sentAt - 10000
+
+            // 👇 Randomly decide if this mail is "inbox" or "sent"
+            const isSentByUser = Math.random() > 0.5
+
+            const from = isSentByUser ? loggedinUser.email : contactEmail
+            const to = isSentByUser ? contactEmail : loggedinUser.email
+
+            mails.push({
+                id,
+                createdAt,
+                subject,
+                body,
+                isRead,
+                sentAt,
+                removedAt: null,
+                from,
+                to
+            })
+        }
+
+        utilService.saveToStorage(MAIL_KEY, mails)
     }
-  }
-  
-  
-  _createDemoMails()
+}
+
+
+_createDemoMails()
 
 

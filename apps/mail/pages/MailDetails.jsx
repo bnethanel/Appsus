@@ -34,12 +34,14 @@ export function MailDetails() {
 
     if (!mail) return <div>Loading mail...</div>
     return (
-        <section >
-            <button onClick={onBack}>back</button>
-            <button onClick={onDeleteMail}>delete</button>
-            <h1>{mail.subject}</h1>
-            <p>{mail.from}</p>
-            <p>{mail.body}</p>
+        <section className="mail-details" >
+            <button className="mail-details-back-btn" onClick={onBack}><i className="fa-solid fa-arrow-left "></i></button>
+            <button className="mail-details-delete-btn" onClick={onDeleteMail}><i className="fa-solid fa-trash "></i></button>
+            <div className="mail-details-content">
+                <h1 className="mail-details-subject">{mail.subject}</h1>
+                <p className="mail-details-from">From: {mail.from}</p>
+                <p className="mail-details-body">{mail.body}</p>
+            </div>
         </section>
     )
 }
