@@ -1,5 +1,6 @@
 import { utilService } from "../../../services/util.service.js"
 import { storageService } from "../../../services/async-storage.service.js"
+import { showSuccessMsg } from "../../../services/event-bus.service.js"
 
 
 
@@ -31,8 +32,10 @@ function remove(mailId) {
         .then(mail => {
             if (!mail.removedAt) {
                 mail.removedAt = Date.now()
+                showSuccessMsg('Mail moved to trash')
                 return save(mail)
             } else {
+                showSuccessMsg('Mail deleted')
                 return storageService.remove(MAIL_KEY, mailId)
             }
 
@@ -78,6 +81,15 @@ function query(filterBy = {}) {
             )
         }
 
+        if (filterBy.sort === 'date-newest') {
+            mails.sort((a, b) => b.sentAt - a.sentAt)
+        } else if (filterBy.sort === 'date-oldest') {
+            mails.sort((a, b) => a.sentAt - b.sentAt)
+        } else if (filterBy.sort === 'subject-asc') {
+            mails.sort((a, b) => a.subject.localeCompare(b.subject))
+        } else if (filterBy.sort === 'subject-desc') {
+            mails.sort((a, b) => b.subject.localeCompare(a.subject))
+        }
         return mails
     })
 }

@@ -6,69 +6,70 @@ import { MailFolderList } from '../cmps/MailFolderList.jsx'
 import { MailList } from '../cmps/MailList.jsx'
 
 export function MailIndex() {
-    const [mails, setMails] = useState([])
-    const [filterBy, setFilterBy] = useState({ status: 'inbox', txt: '' })
-    const location = useLocation()
+  const [mails, setMails] = useState([])
+  const [filterBy, setFilterBy] = useState({ status: 'inbox', txt: '', sort: 'date-newest' })
+  const location = useLocation()
+  console.log('Current sort method:', filterBy.sort)
+  console.log('Filter passed to query:', filterBy)
+  useEffect(() => {
+    mailService.query(filterBy).then(setMails)
+  }, [filterBy, location])
 
-    useEffect(() => {
-        mailService.query(filterBy).then(setMails)
-    }, [filterBy, location])
+  function onSetFilter(updatedFilter) {
+    setFilterBy(prev => ({ ...prev, ...updatedFilter }))
+  }
 
-    function onSetFilter(updatedFilter) {
-        setFilterBy(prev => ({ ...prev, ...updatedFilter }))
-    }
+  function onRemoveMail(mailId) {
+    // setIsLoading(true)
+    mailService.remove(mailId)
+      .then(() => {
+        setMails((prevMails) => prevMails.filter(mail => mail.id !== mailId))
+        // showSuccessMsg(`Car (${carId}) removed successfully!`)
+      })
+      .catch(err => {
+        console.log('Problem removing mail:', err)
+        // showErrorMsg('Problem removing car!')
+      })
+    // .finally(() => setIsLoading(false))
+  }
 
-    function onRemoveMail(mailId) {
-        // setIsLoading(true)
-        mailService.remove(mailId)
-            .then(() => {
-                setMails((prevMails) => prevMails.filter(mail => mail.id !== mailId))
-                // showSuccessMsg(`Car (${carId}) removed successfully!`)
-            })
-            .catch(err => {
-                console.log('Problem removing mail:', err)
-                // showErrorMsg('Problem removing car!')
-            })
-        // .finally(() => setIsLoading(false))
-    }
+  function onToggleStar(mailId) {
+    mailService.get(mailId).then(mail => {
+      mail.isStarred = !mail.isStarred
+      mailService.save(mail).then(() => {
+        // Refresh the state so the UI updates
+        setMails(prevMails =>
+          prevMails.map(m => m.id === mailId ? { ...m, isStarred: mail.isStarred } : m)
+        )
+      })
+    })
+  }
 
-    function onToggleStar(mailId) {
-        mailService.get(mailId).then(mail => {
-          mail.isStarred = !mail.isStarred
-          mailService.save(mail).then(() => {
-            // Refresh the state so the UI updates
-            setMails(prevMails =>
-              prevMails.map(m => m.id === mailId ? { ...m, isStarred: mail.isStarred } : m)
-            )
-          })
-        })
-      }
-
-      function onToggleRead(mailId) {
-        mailService.get(mailId).then(mail => {
-          mail.isRead = !mail.isRead
-          mailService.save(mail).then(() => {
-            setMails(prevMails =>
-              prevMails.map(m => m.id === mailId ? { ...m, isRead: mail.isRead } : m)
-            )
-          })
-        })
-      }
+  function onToggleRead(mailId) {
+    mailService.get(mailId).then(mail => {
+      mail.isRead = !mail.isRead
+      mailService.save(mail).then(() => {
+        setMails(prevMails =>
+          prevMails.map(m => m.id === mailId ? { ...m, isRead: mail.isRead } : m)
+        )
+      })
+    })
+  }
 
 
-    return (
-        <section className="flex">
-            <MailFolderList onSetFilter={status => onSetFilter({ status })} selectedFolder={filterBy.status} />
+  return (
+    <section className="flex">
+      <MailFolderList onSetFilter={status => onSetFilter({ status })} selectedFolder={filterBy.status} />
 
-            <section className="flex column mail-main">
-                <MailFilter onSetFilter={onSetFilter} />
+      <section className="flex column mail-main">
+        <MailFilter onSetFilter={onSetFilter} />
 
-                <div className="mail-content-wrapper">
-                    <MailList mails={mails} onRemoveMail={onRemoveMail} onToggleStar={onToggleStar} isReadFilter={filterBy.isRead} onToggleRead={onToggleRead} />
-                    <Outlet />
-                </div>
+        <div className="mail-content-wrapper">
+          <MailList mails={mails} onRemoveMail={onRemoveMail} onToggleStar={onToggleStar} isReadFilter={filterBy.isRead} isStarredFilter={filterBy.isStarred} onToggleRead={onToggleRead} />
+          <Outlet />
+        </div>
 
-            </section>
-        </section>
-    )
+      </section>
+    </section>
+  )
 }

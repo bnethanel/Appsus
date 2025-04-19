@@ -1,7 +1,7 @@
 const { useNavigate } = ReactRouterDOM
 import { mailService } from "../services/mail.service.js"
 
-export function MailPreview({ mail, isReadFilter, onToggleStar, onRemoveMail, onToggleRead }) {
+export function MailPreview({ mail, isReadFilter, onToggleStar, onRemoveMail, onToggleRead, isStarredFilter }) {
     const navigate = useNavigate()
 
     function onOpenMail() {
@@ -55,7 +55,7 @@ export function MailPreview({ mail, isReadFilter, onToggleStar, onRemoveMail, on
         <li
             className={
                 `mail-preview ${mail.isRead ? 'read' : 'unread'} ` +
-                ((isReadFilter !== null && mail.isRead === isReadFilter) ? 'highlight' : '')
+                ((isReadFilter !== null && mail.isRead === isReadFilter ) ? 'highlight' : '') 
             }
             onClick={onOpenMail}
         >
@@ -64,7 +64,7 @@ export function MailPreview({ mail, isReadFilter, onToggleStar, onRemoveMail, on
             <span className="mail-from">{mail.from}</span>
             <span className="mail-subject">{mail.subject}</span>
             <span className="mail-snippet">{mail.body}</span>
-            <span className="mail-time">{formatDate(mail.sentAt || mail.createdAt)}</span> {/* will change later later */}
+            <span className="mail-time">{formatDate(mail.sentAt || mail.createdAt)}</span>
 
             <div className="mail-actions">
                 <button className="mail-preview-btn-trash" title="Delete" onClick={onDeletePreviewMail}><i className="fa-solid fa-trash"></i></button>

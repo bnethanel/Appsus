@@ -2,7 +2,7 @@ const { useState } = React
 
 export function MailFilter({ onSetFilter }) {
 
-    const [filterBy, setFilterBy] = useState({ status: 'inbox', txt: '', isRead: null })
+    const [filterBy, setFilterBy] = useState({ status: 'inbox', txt: '', isRead: null, sort: 'date-newest' })
 
     function handleChange(ev) {
         const { name, value } = ev.target
@@ -10,7 +10,9 @@ export function MailFilter({ onSetFilter }) {
 
 
         if (name === 'isRead') {
-            val = value === 'all' ? null : value === 'true'
+            if (value === 'all') val = null
+            else if (value === 'starred') val = 'starred'
+            else val = value === 'true'
         }
 
 
@@ -40,6 +42,19 @@ export function MailFilter({ onSetFilter }) {
                 <option value="all">All</option>
                 <option value="false">Unread</option>
                 <option value="true">Read</option>
+                {/* <option value="starred">Starred</option> */}
+            </select>
+
+            <select
+                name="sort"
+                value={filterBy.sort}
+                onChange={handleChange}
+                className="on-read-filter"
+            >
+                <option value="date-newest">Date: Newest First</option>
+                <option value="date-oldest">Date: Oldest First</option>
+                <option value="subject-asc">Subject: A → Z</option>
+                <option value="subject-desc">Subject: Z → A</option>
             </select>
         </section>
     )
