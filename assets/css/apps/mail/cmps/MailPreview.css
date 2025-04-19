@@ -64,3 +64,7 @@
 .mail-preview.highlight {
     background-color: #C2DBFF; 
   }
+
+  .mail-main {
+    flex: 1;
+}

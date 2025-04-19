@@ -34,7 +34,7 @@ export function MailDetails() {
 
     if (!mail) return <div>Loading mail...</div>
     return (
-        <section>
+        <section >
             <button onClick={onBack}>back</button>
             <button onClick={onDeleteMail}>delete</button>
             <h1>{mail.subject}</h1>

@@ -55,6 +55,10 @@ function query(filterBy = {}) {
                 case 'draft':
                     mails = mails.filter(mail => mail.isDraft)
                     break
+
+                case 'star':
+                    mails = mails.filter(mail => mail.isStarred)
+                    break
             }
         }
 
@@ -92,6 +96,7 @@ function getEmptyMail(to = '', subject = '', body = '') {
       body,
       isRead: false,
       sentAt: Date.now(),
+      isStarred: false,
       removedAt: null,
       from: loggedinUser.email,
       to

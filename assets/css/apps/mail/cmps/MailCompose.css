@@ -1,0 +1,60 @@
+.mail-compose-floating-panel {
+    position: fixed;
+    top: 0px;
+    right: 40px;
+    width: 500px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 10;
+    height: 576px;
+}
+
+.compose-form {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mail-compose-close {
+    border: none;
+    background-color: #F8FAFD;
+}
+
+.mail-compose-header {
+    background-color: #F8FAFD;
+    padding-left: 16px;
+    height: 30px;
+}
+
+.compose-to,
+.compose-subject {
+    border: none;
+    border-bottom: 1px solid rgb(219, 219, 219);
+    height: 36px;
+}
+
+.compose-send {
+    height: 36px;
+    width: 80px;
+    background-color: #297BE6;
+    color: white;
+    border-radius: 999px;
+    border: none;
+    margin-bottom: 14px;
+}
+
+.compose-body {
+    border: none;
+    height: 376px;
+    resize: none;
+    overflow: auto;
+}
+
+.compose-to:focus,
+.compose-subject:focus,
+.compose-body:focus {
+    outline: none;
+    box-shadow: none;
+}

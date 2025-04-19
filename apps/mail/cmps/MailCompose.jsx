@@ -1,5 +1,5 @@
 const { useState } = React
-const { useNavigate } = ReactRouterDOM
+const { useNavigate, Link } = ReactRouterDOM
 import { mailService } from '../services/mail.service.js'
 
 export function MailCompose() {
@@ -27,15 +27,24 @@ export function MailCompose() {
   }
 
   return (
-    <section className="mail-compose">
-      <h2>New Message</h2>
-      <form onSubmit={onSubmit}>
+    <section className="mail-compose-floating-panel">
+      <div className="mail-compose-header flex space-between">
+        <h2 >New Message</h2>
+        
+        <Link to="/mail">
+          <button className="mail-compose-close">x</button>
+        </Link>
+
+      </div>
+
+      <form onSubmit={onSubmit} className="compose-form">
         <input
           type="email"
           name="to"
           placeholder="To"
           value={formData.to}
           onChange={handleChange}
+          className="compose-to"
           required
         />
         <input
@@ -44,16 +53,17 @@ export function MailCompose() {
           placeholder="Subject"
           value={formData.subject}
           onChange={handleChange}
+          className="compose-subject"
           required
         />
         <textarea
           name="body"
-          placeholder="Body"
           value={formData.body}
           onChange={handleChange}
+          className="compose-body"
           required
         ></textarea>
-        <button type="submit">Send</button>
+        <button type="submit" className="compose-send">Send</button>
       </form>
     </section>
   )

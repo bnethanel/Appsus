@@ -1,4 +1,5 @@
 const { useEffect, useState } = React
+const { Outlet } = ReactRouterDOM
 import { mailService } from '../services/mail.service.js'
 import { MailFilter } from '../cmps/MailFilter.jsx'
 import { MailFolderList } from '../cmps/MailFolderList.jsx'
@@ -29,13 +30,17 @@ export function MailIndex() {
             })
             // .finally(() => setIsLoading(false))
     }
+    
 
     return (
-        <section className="mail-index">
-            <MailFilter onSetFilter={onSetFilter} />
-            <MailFolderList onSetFilter={status => onSetFilter({ status })} />
-            <h2>{filterBy.status}</h2>
-            <MailList mails={mails} onRemoveMail={onRemoveMail} isReadFilter={filterBy.isRead}/>
+        <section className="flex">
+            <MailFolderList onSetFilter={status => onSetFilter({ status })} selectedFolder={filterBy.status} />
+    
+            <section className="flex column mail-main">
+                <MailFilter onSetFilter={onSetFilter} />
+                <MailList mails={mails} onRemoveMail={onRemoveMail} isReadFilter={filterBy.isRead} />
+            </section>
+            <Outlet />
         </section>
     )
 }

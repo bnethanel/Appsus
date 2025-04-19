@@ -1,0 +1,67 @@
+.mail-folder-list {
+    display: flex;
+    flex-direction: column;
+    background-color: #f1f3f4;
+    padding: 16px, 16px, 16px, 0px;
+    width: 256px;
+    height: 100vh;
+    /* border-right: 1px solid #dadce0; */
+}
+
+.compose-btn {
+    background-color: #c2e7ff;
+    color: #000;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 24px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    cursor: pointer;
+    height: 60px;
+    transition: background-color 0.3s;
+    margin-left: 5px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.compose-btn:hover {
+    background-color: #a5d8ff;
+}
+
+.mail-folder-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mail-folder-list li {
+    margin-bottom: 10px;
+}
+
+.mail-folder-list li button {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    padding: 8px 22px;
+    text-align: left;
+    width: 100%;
+    border-radius: 12px;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+}
+
+.mail-folder-list li button:hover {
+    background-color: #e0e0e0;
+}
+
+.mail-folder-list li button.active {
+    background-color: #d2e3fc;
+    font-weight: bold;
+}
+
