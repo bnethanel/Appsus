@@ -7,6 +7,7 @@
     align-items: center;
     transition: background-color 0.2s;
     cursor: pointer;
+    font-family: 'Roboto', sans-serif;
 }
 
 .mail-actions {
@@ -94,6 +95,10 @@
 .unread .mail-from,
 .unread .mail-time {
     font-weight: bold;
+}
+
+.unread .mail-time {
+    color: black;
 }
 
 .read .mail-subject,
