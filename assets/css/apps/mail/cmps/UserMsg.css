@@ -3,7 +3,8 @@
     top: 0.5rem;
     right: 0.5rem;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     max-width: 500px;
     padding: 0.75rem;
     margin: 0.5rem;
@@ -15,7 +16,11 @@
 
 .user-msg.success {
     background-color: #d4edda;
-    color: #155724;
+    color: white;
+    background-color: black;
+    height: 40px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
 }
 
 .user-msg.error {
@@ -25,7 +30,6 @@
 
 .user-msg h4 {
     margin: 0;
-    margin-bottom: 0.5rem;
 }
 
 .user-msg button {
@@ -33,12 +37,14 @@
     border: none;
     cursor: pointer;
     font-size: 1.1rem;
-    width: fit-content;
+    width: 28px;
+    height: 28px;
     aspect-ratio: 1;
-    align-self: end;
     color: inherit;
+    background-color: transparent;
     border-radius: 50%;
     margin-top: 1rem;
+    transition: background-color 0.2s;
 }
 
 .user-msg button:hover {

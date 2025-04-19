@@ -32,7 +32,7 @@ function remove(mailId) {
         .then(mail => {
             if (!mail.removedAt) {
                 mail.removedAt = Date.now()
-                showSuccessMsg('Mail moved to trash')
+                showSuccessMsg('Conversation moved to Trash.')
                 return save(mail)
             } else {
                 showSuccessMsg('Mail deleted')
