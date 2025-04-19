@@ -1,4 +1,5 @@
 /* Setup */
+@import './apps/mail/setup/typography.css';
 
 @import './setup/variables.css';
 /* @import './setup/fonts.css'; */

@@ -1,17 +1,25 @@
 .mail-compose-floating-panel {
     position: fixed;
-    top: 0px;
+    bottom: 0px;
     right: 40px;
     width: 500px;
     background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border: none;
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0.15),
+        0 0 1px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
     z-index: 10;
     height: 576px;
+    display: flex;
+    /* NEW */
+    flex-direction: column;
+    /* Stack header + form vertically */
 }
 
 .compose-form {
+    flex: 1;
+    /* Take all available space under the header */
     padding: 16px;
     display: flex;
     flex-direction: column;
@@ -19,13 +27,27 @@
 
 .mail-compose-close {
     border: none;
-    background-color: #F8FAFD;
+    background-color: #F2F6FC;
+}
+
+.mail-compose-close:hover {
+    cursor: pointer;
+    background-color: #dfe4ea;
 }
 
 .mail-compose-header {
-    background-color: #F8FAFD;
-    padding-left: 16px;
+    background-color: #F2F6FC;
+    padding: 7px 16px;
     height: 30px;
+}
+
+.compose-header-message {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    font-weight: 500;
+    color: #202124;
+    font-family: 'Roboto', sans-serif;
 }
 
 .compose-to,
@@ -42,14 +64,23 @@
     color: white;
     border-radius: 999px;
     border: none;
-    margin-bottom: 14px;
+}
+
+.compose-send:hover {
+    cursor: pointer;
+    background-color: #3d88eb;
+    box-shadow: 0 2px 4px #3d88eb66;
+
 }
 
 .compose-body {
+    flex: 1;
     border: none;
-    height: 376px;
     resize: none;
     overflow: auto;
+    margin-bottom: 12px;
+    width: auto !important;
+    padding-top: 10px;
 }
 
 .compose-to:focus,

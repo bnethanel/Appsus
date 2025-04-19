@@ -28,8 +28,8 @@ export function MailCompose() {
 
   return (
     <section className="mail-compose-floating-panel">
-      <div className="mail-compose-header flex space-between">
-        <h2 >New Message</h2>
+      <div className="mail-compose-header flex space-between align-center">
+        <span className="compose-header-message  ">New Message</span>
         
         <Link to="/mail">
           <button className="mail-compose-close">x</button>
