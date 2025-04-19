@@ -1,8 +1,8 @@
 .mail-folder-list {
     display: flex;
     flex-direction: column;
-    background-color: #f1f3f4;
-    padding: 16px, 16px, 16px, 0px;
+    background-color: #F8FAFD;
+    padding: 16px, 16px, 0px, 0px;
     width: 256px;
     height: 100vh;
     /* border-right: 1px solid #dadce0; */
@@ -24,6 +24,9 @@
     gap: 15px;
     justify-content: center;
     align-items: center;
+    font-size: 0.91rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
 }
 
 .compose-btn:hover {
