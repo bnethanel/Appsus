@@ -1,10 +1,10 @@
 import { MailPreview } from './MailPreview.jsx'
 
-export function MailList({ mails, isReadFilter, onToggleStar}) {
+export function MailList({ mails, isReadFilter, onToggleStar, onRemoveMail}) {
     return (
         <ul className="mail-list">
             {mails.map(mail => (
-                <MailPreview key={mail.id} mail={mail} isReadFilter={isReadFilter} onToggleStar={onToggleStar} />
+                <MailPreview key={mail.id} mail={mail} isReadFilter={isReadFilter} onToggleStar={onToggleStar} onRemoveMail={onRemoveMail} />
             ))}
         </ul>
     )
