@@ -44,6 +44,17 @@ export function MailIndex() {
         })
       }
 
+      function onToggleRead(mailId) {
+        mailService.get(mailId).then(mail => {
+          mail.isRead = !mail.isRead
+          mailService.save(mail).then(() => {
+            setMails(prevMails =>
+              prevMails.map(m => m.id === mailId ? { ...m, isRead: mail.isRead } : m)
+            )
+          })
+        })
+      }
+
 
     return (
         <section className="flex">
@@ -53,7 +64,7 @@ export function MailIndex() {
                 <MailFilter onSetFilter={onSetFilter} />
 
                 <div className="mail-content-wrapper">
-                    <MailList mails={mails} onRemoveMail={onRemoveMail} onToggleStar={onToggleStar} isReadFilter={filterBy.isRead} />
+                    <MailList mails={mails} onRemoveMail={onRemoveMail} onToggleStar={onToggleStar} isReadFilter={filterBy.isRead} onToggleRead={onToggleRead} />
                     <Outlet />
                 </div>
 

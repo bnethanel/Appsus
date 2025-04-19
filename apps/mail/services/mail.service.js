@@ -136,6 +136,12 @@ function getEmptyMail(to = '', subject = '', body = '') {
 //     to: 'user@appsus.com'
 // }
 
+function getRandomPastDate(yearsBack = 2) {
+    const now = Date.now()
+    const past = now - yearsBack * 365 * 24 * 60 * 60 * 1000 // X years back
+    return new Date(past + Math.random() * (now - past)).getTime()
+}
+
 const loggedinUser = {
     email: 'user@appsus.com',
     fullname: 'Mahatma Appsus'
@@ -179,8 +185,8 @@ function _createDemoMails() {
             const subject = demoSubjects[i % demoSubjects.length]
             const body = demoBodies[Math.floor(Math.random() * demoBodies.length)]
             const contactEmail = contacts[Math.floor(Math.random() * contacts.length)]
-            const sentAt = Date.now() - Math.floor(Math.random() * 100000000)
-            const createdAt = sentAt - 10000
+            const sentAt = getRandomPastDate()
+            const createdAt = sentAt - Math.floor(Math.random() * 60000)
 
             // 👇 Randomly decide if this mail is "inbox" or "sent"
             const isSentByUser = Math.random() > 0.5
