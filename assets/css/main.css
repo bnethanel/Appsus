@@ -1,5 +1,6 @@
 /* Setup */
 @import './apps/mail/setup/typography.css';
+@import './apps/mail/setup/MailMediaQuery.css';
 
 @import './setup/variables.css';
 /* @import './setup/fonts.css'; */
@@ -19,6 +20,7 @@
 @import './apps/mail/pages/MailDetails.css';
 
 
+
 /* Cmps */
 
 @import './cmps/UserMsg.css';
@@ -29,4 +31,4 @@
 @import './apps/mail/cmps/MailFolderList.css';
 @import './apps/mail/cmps/MailCompose.css';
 @import './apps/mail/cmps/MailFilter.css';
-@import './apps/mail/cmps/UserMsg.css'
+@import './apps/mail/cmps/UserMsg.css';

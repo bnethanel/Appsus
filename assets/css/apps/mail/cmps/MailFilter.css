@@ -1,6 +1,7 @@
 .mail-filter-search-wrapper {
     position: relative;
-    width: 720px;
+    max-width: 720px;
+    left: 1rem;
     display: flex;
 }
 

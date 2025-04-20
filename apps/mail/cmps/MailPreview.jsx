@@ -19,8 +19,8 @@ export function MailPreview({ mail, isReadFilter, onToggleStar, onRemoveMail, on
         onToggleStar(mail.id)
     }
 
-     function onDeletePreviewMail(ev) {
-         ev.stopPropagation() 
+    function onDeletePreviewMail(ev) {
+        ev.stopPropagation()
         onRemoveMail(mail.id)
     }
 
@@ -32,22 +32,22 @@ export function MailPreview({ mail, isReadFilter, onToggleStar, onRemoveMail, on
     function formatDate(timestamp) {
         const date = new Date(timestamp)
         const now = new Date()
-      
+
         // If it's this year, return like "Apr 17"
         if (date.getFullYear() === now.getFullYear()) {
-          return date.toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-          })
+            return date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+            })
         }
-      
+
         // Else, return "Apr 17, 2023"
         return date.toLocaleDateString('en-US', {
-          month: 'short',
-          day: 'numeric',
-          year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
         })
-      }
+    }
 
 
 
@@ -55,20 +55,27 @@ export function MailPreview({ mail, isReadFilter, onToggleStar, onRemoveMail, on
         <li
             className={
                 `mail-preview ${mail.isRead ? 'read' : 'unread'} ` +
-                ((isReadFilter !== null && mail.isRead === isReadFilter ) ? 'highlight' : '') 
+                ((isReadFilter !== null && mail.isRead === isReadFilter) ? 'highlight' : '')
             }
             onClick={onOpenMail}
         >
 
-            <button className="mail-preview-star" onClick={handleToggleStar}><i className={mail.isStarred ? "fa-solid fa-star active-star" : "fa-regular fa-star"} ></i></button>
-            <span className="mail-from">{mail.from}</span>
-            <span className="mail-subject">{mail.subject}</span>
-            <span className="mail-snippet">{mail.body}</span>
-            <span className="mail-time">{formatDate(mail.sentAt || mail.createdAt)}</span>
+            <button className="mail-preview-star star-left" onClick={handleToggleStar}><i className={mail.isStarred ? "fa-solid fa-star active-star" : "fa-regular fa-star"} ></i></button>
+            <div className="mail-preview-container grid  ">
+                <span className="mail-from">{mail.from}</span>
+                <span className="mail-subject">{mail.subject}</span>
+                <span className="mail-snippet">{mail.body}</span>
+            </div>
+
+            <div className="preview-left">
+                <button className="mail-preview-star star-right" onClick={handleToggleStar}><i className={mail.isStarred ? "fa-solid fa-star active-star right-star" : "fa-regular fa-star right-star"} ></i></button>
+                <span className="mail-time">{formatDate(mail.sentAt || mail.createdAt)}</span>
+            </div>
+
 
             <div className="mail-actions">
                 <button className="mail-preview-btn-trash" title="Delete" onClick={onDeletePreviewMail}><i className="fa-solid fa-trash"></i></button>
-                <button className="mail-preview-btn-unread" onClick={handleToggleRead} title={mail.isRead? "Mark as unread" : "Mark as read"}><i className={mail.isRead? "fa-regular fa-envelope" : "fa-solid fa-envelope-open"} ></i></button>
+                <button className="mail-preview-btn-unread" onClick={handleToggleRead} title={mail.isRead ? "Mark as unread" : "Mark as read"}><i className={mail.isRead ? "fa-regular fa-envelope" : "fa-solid fa-envelope-open"} ></i></button>
             </div>
         </li>
     )

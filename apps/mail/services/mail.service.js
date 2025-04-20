@@ -169,12 +169,28 @@ const demoSubjects = [
 ]
 
 const demoBodies = [
-    'Just wanted to check in.', 'Here is the info you asked for.',
-    'Let me know what you think.', 'Thanks again!', 'Attached is the file.',
-    'Please confirm receipt.', 'Are you coming tonight?',
-    'This is a friendly reminder.', 'Following up on our chat.',
-    'We appreciate your patience.'
-]
+    "Hi there, I just wanted to follow up and see if you had a chance to review the proposal I sent last week.",
+    "Thank you for your quick response. I’ve attached the updated document for your review.",
+    "We’ve scheduled your appointment for next Thursday at 2:00 PM. Let us know if that works for you.",
+    "Congratulations! You’ve been selected for the next stage of the interview process. Please check your calendar and book a time.",
+    "This is a reminder that your subscription will expire in 3 days. Renew now to continue enjoying our services without interruption.",
+    "I’m reaching out to confirm our meeting tomorrow morning. Please let me know if any changes come up.",
+    "We noticed a new sign-in from an unrecognized device. If this was not you, please reset your password immediately.",
+    "Hope you had a great weekend! Just wanted to check in on your progress with the draft report.",
+    "Your package has been shipped and is on its way. You can track it using the link provided below.",
+    "We’ve received your support request and a member of our team will get back to you shortly.",
+    "It was great catching up earlier. I’ve added a few notes from our conversation in this email for your reference.",
+    "Please review the attached invoice and let us know if you have any questions or concerns.",
+    "We’re currently running a limited-time offer you might be interested in. Check it out before it ends!",
+    "As requested, I’ve included the performance metrics from the last quarter in the attached file.",
+    "Can you please confirm whether you’ll be attending the team lunch on Friday?",
+    "Just a heads up that we’ll be performing scheduled maintenance this weekend, which may cause brief service interruptions.",
+    "Thanks again for your feedback! It’s extremely helpful as we continue to improve our product.",
+    "Attached you’ll find the minutes from last week's meeting, along with action items and deadlines.",
+    "I'm sharing the presentation deck we discussed — feel free to comment or suggest changes.",
+    "Our office will be closed next Monday for the holiday. We'll resume normal operations on Tuesday."
+  ];
+  
 
 function _createDemoMails() {
     let mails = utilService.loadFromStorage(MAIL_KEY)
@@ -191,7 +207,7 @@ function _createDemoMails() {
             'sharon@design.co', 'offers@deals.com'
         ]
 
-        for (let i = 0; i < 25; i++) {
+        for (let i = 0; i < 32; i++) {
             const isRead = Math.random() > 0.5
             const id = 'e' + (101 + i)
             const subject = demoSubjects[i % demoSubjects.length]

@@ -9,6 +9,7 @@ export function MailIndex() {
   const [mails, setMails] = useState([])
   const [filterBy, setFilterBy] = useState({ status: 'inbox', txt: '', sort: 'date-newest' })
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+  const isMobile = window.innerWidth <= 600
 
   const location = useLocation()
   console.log('Current sort method:', filterBy.sort)
@@ -68,12 +69,12 @@ export function MailIndex() {
 
   return (
     <section className="flex">
-      <aside className={isSidebarOpen ? 'open' : 'collapsed'}>
+      <aside className={ isSidebarOpen ? 'open' : 'collapsed'}>
         <MailFolderList onSetFilter={status => onSetFilter({ status })} selectedFolder={filterBy.status} />
       </aside>
       
       <section className="flex column mail-main">
-        <MailFilter onSetFilter={onSetFilter} onToggleSidebar={toggleSidebar} />
+        <MailFilter onSetFilter={onSetFilter} filterBy={filterBy} onToggleSidebar={toggleSidebar} />
 
         <div className="mail-content-wrapper">
           <MailList mails={mails} onRemoveMail={onRemoveMail} onToggleStar={onToggleStar} isReadFilter={filterBy.isRead} isStarredFilter={filterBy.isStarred} onToggleRead={onToggleRead} />

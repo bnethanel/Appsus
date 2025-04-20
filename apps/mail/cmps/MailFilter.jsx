@@ -1,8 +1,7 @@
 const { useState } = React
 
-export function MailFilter({ onSetFilter, onToggleSidebar }) {
+export function MailFilter({ onSetFilter, onToggleSidebar, filterBy }) {
 
-    const [filterBy, setFilterBy] = useState({ status: 'inbox', txt: '', isRead: null, sort: 'date-newest' })
 
     function handleChange(ev) {
         const { name, value } = ev.target
@@ -17,7 +16,6 @@ export function MailFilter({ onSetFilter, onToggleSidebar }) {
 
 
         const updatedFilter = { ...filterBy, [name]: val }
-        setFilterBy(updatedFilter)
 
 
         onSetFilter(updatedFilter)

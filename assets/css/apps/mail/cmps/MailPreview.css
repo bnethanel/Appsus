@@ -1,6 +1,6 @@
 .mail-preview {
     display: grid;
-    grid-template-columns: 30px 180px 1fr 2fr 100px;
+    grid-template-columns: 30px 2fr 100px;
     padding: 12px;
     border-bottom: 1px solid #ddd;
     column-gap: 50px;
@@ -8,6 +8,10 @@
     transition: background-color 0.2s;
     cursor: pointer;
     
+}
+
+.mail-preview-container {
+    grid-template-columns: 1fr 0.6fr 2fr;
 }
 
 .mail-actions {
@@ -54,12 +58,25 @@
     background-color: rgb(201, 200, 200);
 }
 
+.preview-left {
+    /* display: flex; */
+    gap: 0px;
+    margin: 0;
+}
+
 .mail-time {
     font-size: 0.75rem;
     color: #999;
     text-align: right;
     position: relative;
     z-index: 100;
+    display: flex;
+    justify-content: end;
+    margin-right: 5px;
+}
+
+ .star-right {
+    display: none !important;
 }
 
 .mail-preview:first-child {
