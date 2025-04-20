@@ -70,9 +70,6 @@ export function MailPreview({ mail, isReadFilter, onToggleStar, onRemoveMail, on
                 <button className="mail-preview-btn-trash" title="Delete" onClick={onDeletePreviewMail}><i className="fa-solid fa-trash"></i></button>
                 <button className="mail-preview-btn-unread" onClick={handleToggleRead} title={mail.isRead? "Mark as unread" : "Mark as read"}><i className={mail.isRead? "fa-regular fa-envelope" : "fa-solid fa-envelope-open"} ></i></button>
             </div>
-
-
-            
         </li>
     )
 }
