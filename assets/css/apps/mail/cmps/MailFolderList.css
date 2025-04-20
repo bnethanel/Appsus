@@ -68,3 +68,42 @@
     font-weight: bold;
 }
 
+ .mail-folder-list li button i {
+    height: 10px;
+    width: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* .sidebar {
+    width: 220px;
+    transition: width 0.3s ease;
+    overflow: hidden;
+  }
+  
+  .sidebar.collapsed {
+    width: 70px;
+  }
+  
+  .sidebar .folder-label {
+    display: inline-block;
+    transition: opacity 0.2s;
+  }
+  
+  .sidebar.collapsed .folder-label {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  
+  .hamburger-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.4rem;
+    margin: 10px;
+    padding: 4px;
+    z-index: 1000;
+  }
+  */

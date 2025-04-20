@@ -8,6 +8,8 @@ import { MailList } from '../cmps/MailList.jsx'
 export function MailIndex() {
   const [mails, setMails] = useState([])
   const [filterBy, setFilterBy] = useState({ status: 'inbox', txt: '', sort: 'date-newest' })
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+
   const location = useLocation()
   console.log('Current sort method:', filterBy.sort)
   console.log('Filter passed to query:', filterBy)
@@ -35,15 +37,17 @@ export function MailIndex() {
 
   function onToggleStar(mailId) {
     mailService.get(mailId).then(mail => {
-      mail.isStarred = !mail.isStarred
-      mailService.save(mail).then(() => {
-        // Refresh the state so the UI updates
-        setMails(prevMails =>
-          prevMails.map(m => m.id === mailId ? { ...m, isStarred: mail.isStarred } : m)
-        )
-      })
+        mail.isStarred = !mail.isStarred
+        mailService.save(mail).then(() => {
+            setMails(prevMails => {
+                if (filterBy.status === 'star' && !mail.isStarred) {
+                    return prevMails.filter(m => m.id !== mailId)
+                }
+                return prevMails.map(m => m.id === mailId ? { ...m, isStarred: mail.isStarred } : m)
+            })
+        })
     })
-  }
+}
 
   function onToggleRead(mailId) {
     mailService.get(mailId).then(mail => {
@@ -59,7 +63,13 @@ export function MailIndex() {
 
   return (
     <section className="flex">
-      <MailFolderList onSetFilter={status => onSetFilter({ status })} selectedFolder={filterBy.status} />
+      {/* <button className="hamburger-btn" onClick={() => setIsSidebarOpen(prev => !prev)}>
+        <i className="fa-solid fa-bars"></i>
+      </button> */}
+      {/* <aside className={`sidebar ${isSidebarOpen ? 'open' : 'collapsed'}`}> */}
+        <MailFolderList onSetFilter={status => onSetFilter({ status })} selectedFolder={filterBy.status} />
+      {/* </aside> */}
+
 
       <section className="flex column mail-main">
         <MailFilter onSetFilter={onSetFilter} />

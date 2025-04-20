@@ -1,3 +1,7 @@
 .mail-content-wrapper {
     position: relative;
 }
+
+body,html,button {
+    font-family: 'Roboto', sans-serif;
+}

@@ -44,16 +44,16 @@ export function MailCompose() {
 
   function onCloseCompose() {
     const hasContent = formData.to || formData.subject || formData.body
-    if (hasContent) {
-      const draft = mailService.getEmptyMail(formData.to, formData.subject, formData.body)
-      draft.isDraft = true
-      draft.sentAt = null
 
-      mailService.add(draft)
+    if (hasContent && (!draft || !draft.id)) {
+        const newDraft = mailService.getEmptyMail(formData.to, formData.subject, formData.body)
+        newDraft.isDraft = true
+        newDraft.sentAt = null
+        mailService.add(newDraft)
     }
 
     navigate('/mail')
-  }
+}
 
   return (
     <section className="mail-compose-floating-panel">
