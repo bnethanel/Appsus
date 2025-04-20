@@ -1,6 +1,6 @@
 const { useState } = React
 
-export function MailFilter({ onSetFilter }) {
+export function MailFilter({ onSetFilter, onToggleSidebar }) {
 
     const [filterBy, setFilterBy] = useState({ status: 'inbox', txt: '', isRead: null, sort: 'date-newest' })
 
@@ -35,6 +35,9 @@ export function MailFilter({ onSetFilter }) {
                     value={filterBy.txt}
                     onChange={handleChange}
                 />
+                <button className="hamburger-btn-right" onClick={onToggleSidebar}>
+                    <i className="fa-solid fa-bars"></i>
+                </button>
             </div>
 
 

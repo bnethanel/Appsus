@@ -3,9 +3,42 @@
     flex-direction: column;
     background-color: #F8FAFD;
     padding: 16px, 16px, 0px, 0px;
-    width: 256px;
     height: 100vh;
     /* border-right: 1px solid #dadce0; */
+    
+}
+
+aside {
+    transition: width 0.3s;
+    width: 256px;
+}
+
+.collapsed {
+    width: 50px;
+}
+
+.collapsed .mail-folder-list li button {
+    width: 30px;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    margin-left: 3px;
+    
+}
+
+.collapsed .btn-word {
+    display: none;
+}
+
+.collapsed .compose-btn span {
+    display: none;
+}
+
+.collapsed .compose-btn {
+    width: 25px;
+    height: 40px;
+    border-radius: 15px;
+    margin: 10px 2px 30px 2px;
 }
 
 .compose-btn {
@@ -76,34 +109,3 @@
     align-items: center;
   }
 
-  /* .sidebar {
-    width: 220px;
-    transition: width 0.3s ease;
-    overflow: hidden;
-  }
-  
-  .sidebar.collapsed {
-    width: 70px;
-  }
-  
-  .sidebar .folder-label {
-    display: inline-block;
-    transition: opacity 0.2s;
-  }
-  
-  .sidebar.collapsed .folder-label {
-    opacity: 0;
-    pointer-events: none;
-  }
-  
-  
-  .hamburger-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.4rem;
-    margin: 10px;
-    padding: 4px;
-    z-index: 1000;
-  }
-  */

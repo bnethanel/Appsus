@@ -1,8 +1,19 @@
 .mail-filter-search-wrapper {
     position: relative;
     width: 720px;
+    display: flex;
 }
 
+.hamburger-btn-right {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transform: translateX(-160%);
+}
+
+.fa-bars {
+    font-size: 1.3rem;
+}
 
 .mail-filter-search {
     background-color: #E9EEF6;
@@ -21,7 +32,7 @@
     outline: none;
 }
 
-.mail-filter-search-wrapper i {
+.mail-filter-search-wrapper .fa-magnifying-glass {
     position: absolute;
     top: 50%;
     left: 14px;

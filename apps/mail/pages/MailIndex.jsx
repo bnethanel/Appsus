@@ -37,17 +37,17 @@ export function MailIndex() {
 
   function onToggleStar(mailId) {
     mailService.get(mailId).then(mail => {
-        mail.isStarred = !mail.isStarred
-        mailService.save(mail).then(() => {
-            setMails(prevMails => {
-                if (filterBy.status === 'star' && !mail.isStarred) {
-                    return prevMails.filter(m => m.id !== mailId)
-                }
-                return prevMails.map(m => m.id === mailId ? { ...m, isStarred: mail.isStarred } : m)
-            })
+      mail.isStarred = !mail.isStarred
+      mailService.save(mail).then(() => {
+        setMails(prevMails => {
+          if (filterBy.status === 'star' && !mail.isStarred) {
+            return prevMails.filter(m => m.id !== mailId)
+          }
+          return prevMails.map(m => m.id === mailId ? { ...m, isStarred: mail.isStarred } : m)
         })
+      })
     })
-}
+  }
 
   function onToggleRead(mailId) {
     mailService.get(mailId).then(mail => {
@@ -60,19 +60,20 @@ export function MailIndex() {
     })
   }
 
+  function toggleSidebar() {
+    setIsSidebarOpen(prev => !prev)
+    console.log('sidebar: ', isSidebarOpen)
+  }
+
 
   return (
     <section className="flex">
-      {/* <button className="hamburger-btn" onClick={() => setIsSidebarOpen(prev => !prev)}>
-        <i className="fa-solid fa-bars"></i>
-      </button> */}
-      {/* <aside className={`sidebar ${isSidebarOpen ? 'open' : 'collapsed'}`}> */}
+      <aside className={isSidebarOpen ? 'open' : 'collapsed'}>
         <MailFolderList onSetFilter={status => onSetFilter({ status })} selectedFolder={filterBy.status} />
-      {/* </aside> */}
-
-
+      </aside>
+      
       <section className="flex column mail-main">
-        <MailFilter onSetFilter={onSetFilter} />
+        <MailFilter onSetFilter={onSetFilter} onToggleSidebar={toggleSidebar} />
 
         <div className="mail-content-wrapper">
           <MailList mails={mails} onRemoveMail={onRemoveMail} onToggleStar={onToggleStar} isReadFilter={filterBy.isRead} isStarredFilter={filterBy.isStarred} onToggleRead={onToggleRead} />
