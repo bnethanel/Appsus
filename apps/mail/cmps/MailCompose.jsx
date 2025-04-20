@@ -1,5 +1,6 @@
 const { useState, useEffect } = React
 const { useNavigate, useLocation } = ReactRouterDOM
+import { showSuccessMsg } from '../../../services/event-bus.service.js'
 import { mailService } from '../services/mail.service.js'
 
 export function MailCompose() {
@@ -38,6 +39,7 @@ export function MailCompose() {
     const newMail = mailService.getEmptyMail(formData.to, formData.subject, formData.body)
 
     mailService.add(newMail).then(() => {
+      showSuccessMsg('Mail sent')
       navigate('/mail')  
     })
   }
